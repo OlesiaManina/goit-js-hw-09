@@ -8,10 +8,12 @@ document.querySelector('.form').addEventListener('submit', (e) => {
     const amountValue = parseInt(amount.value);
   
     const promises = [];
+    let indexToProduct = 0;
   
     for (let index = 0; index < amountValue; index++) {
       const delay = index * stepValue + delayValue;
-      createPromise(index, delay).then(({ position, delay }) => {
+      let indexToProduct = index + 1;
+      createPromise(indexToProduct, delay).then(({ position, delay }) => {
         Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {

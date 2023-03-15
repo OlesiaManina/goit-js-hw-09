@@ -12,6 +12,7 @@ const secondsRef = document.querySelector('span[data-seconds]');
 
 btnRef.disabled = true;
 const currentTime = Date.now();
+let intervalId = null;
 
 
 const options = {
@@ -33,14 +34,18 @@ const options = {
 flatpickr(inputRef, options);
 
 function counterInterval(time) {
-  setInterval(() => {
+  btnRef.disabled = true;
+  intervalId = setInterval(() => {
     const currentTime = Date.now();
     const delta = time - currentTime;
+    if (delta > 0) {
     const deltaInTime = convertMs(delta);
 
     upgradeTextContent(deltaInTime);
-
-    }, 1000)
+    } else {
+      stop();
+    }
+  }, 1000)
 }
 
 function ckeckValidDate(time) {
@@ -82,4 +87,8 @@ function convertMs(ms) {
  
   function pad(value) {
     return value.toString().padStart(2, '0');
+  }
+
+  function stop() {
+    clearInterval(intervalId);
   }
